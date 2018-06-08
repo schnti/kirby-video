@@ -1,0 +1,12 @@
+{
+  "name": "video",
+  "description": "kirby privacy video tag",
+  "author": "Timo Schneider",
+  "license": "MIT",
+  "version": "0.0.1",
+  "type": "kirby-plugin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/schnti/kirby-video"
+  }
+}

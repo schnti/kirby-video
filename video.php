@@ -36,6 +36,6 @@ $kirby->set('tag', 'youtube', array(
 			'image'  => $image,
 		];
 
-		return tpl::load(__DIR__ . DS . 'templates/youtube.php', $data);
+		return tpl::load(__DIR__ . DS . 'templates/video.php', $data);
 	}
 ));
