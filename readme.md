@@ -35,6 +35,13 @@ kirby plugin:install schnti/kirby-video
 ```
 
 ### SCSS
+
+```SCSS
+@import "../website/site/plugins/video/video.scss";
+```
+
+or
+
 ```scss
 .youtube-container {
   position: relative;
