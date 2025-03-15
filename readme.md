@@ -1,6 +1,6 @@
 # Video Plugin
 
-A plugin for [Kirby 3 CMS](http://getkirby.com) to embed content from YouTube without compromising privacy.
+A plugin for [Kirby CMS](http://getkirby.com) to embed content from YouTube without compromising privacy.
 
 ## Commercial Usage
 
@@ -13,7 +13,7 @@ This plugin is free but if you use it in a commercial project please consider
 
 ### Download
 
-[Download the files](https://github.com/schnti/kirby3-video/archive/master.zip) and place them inside `site/plugins/video`.
+[Download the files](https://github.com/schnti/kirby-video/archive/master.zip) and place them inside `site/plugins/video`.
 
 ### Composer
 
@@ -25,7 +25,7 @@ composer require schnti/video
 You can add the plugin as a Git submodule.
 
     $ cd your/project/root
-    $ git submodule add https://github.com/schnti/kirby3-video.git site/plugins/video
+    $ git submodule add https://github.com/schnti/kirby-video.git site/plugins/video
     $ git submodule update --init --recursive
     $ git commit -am "Add Kirby video plugin"
 
