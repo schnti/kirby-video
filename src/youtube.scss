@@ -1,71 +1,124 @@
-.youtube-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+// Filename kept as youtube.scss on purpose: gulp writes dist/youtube.css and
+// renaming it would break the <link> of every existing installation.
+//
+// The rules are emitted twice: once for the new generic class names and once
+// for the previous youtube-* ones. A project that overrides the snippet with
+// the old markup therefore keeps working with this stylesheet, and no
+// meaningless mixtures like `.video-container .youtube-hint` are generated.
 
-  .embed-container {
+@mixin videoEmbed($prefix) {
+  .#{$prefix}-container {
     position: relative;
-    padding-bottom: 100% * (9 / 16); // ration 16:9
-    overflow: hidden;
-    width: 100%;
-    height: auto;
 
-    iframe {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-    }
-  }
+    // Deliberately NOT display: flex.
+    //
+    // The consent notice used to be centered by turning this element into a
+    // flex container. Legacy Edge then fails to lay out the video once
+    // `disabled` is removed and hides the whole container (issue #2). The
+    // notice is now an overlay that centers its own content, so the element
+    // holding the video stays a plain block and Edge has nothing to trip over.
 
-  img {
-    width: 100%;
-  }
-
-  &.disabled:after {
-    position: absolute;
-    content: '';
-    width: 100%;
-    height: 100%;
-    background: #ffffff;
-    opacity: 0.7;
-  }
-
-  .youtube-hint {
-    display: none;
-  }
-
-  &.disabled .youtube-hint {
-    display: inline-block;
-    position: absolute;
-    max-width: 400px;
-    z-index: 1;
-    font-size: 0.9rem;
-    border: 2px solid #F2F2F2;
-
-    @media screen and (max-width: 767px) {
+    .embed-container {
       position: relative;
-      max-width: 100%;
-    }
+      // ratio 16:9, overridden inline with the poster's real ratio.
+      // Written as a literal on purpose: `100% * (9 / 16)` is deprecated in
+      // Dart Sass, and the `math.div` replacement needs `@use`, which the
+      // node-sass builds of the projects importing this file cannot parse.
+      padding-bottom: 56.25%;
+      overflow: hidden;
+      width: 100%;
+      height: auto;
 
-    .youtube-hint-text {
-      background: #ffffff;
-      padding: 20px;
-
-      p {
-        margin-top: 0;
+      iframe {
+        position: absolute;
+        // top/left sind noetig, nicht kosmetisch: ohne sie steht der Rahmen an
+        // seiner statischen Position. Die richtet sich nach text-align, in
+        // einem zentrierten Absatz also nach der Zeilenmitte – das Video sass
+        // dann um die halbe Breite nach rechts versetzt und wurde von
+        // overflow: hidden zur Haelfte abgeschnitten.
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
       }
     }
 
-    .youtube-hint-link-container {
-      margin: 5px 0;
+    img {
+      display: block;
+      width: 100%;
     }
 
-    .youtube-id {
-      font-size: 0.75rem;
-      text-align: right;
-      margin-top: 5px;
+    &.disabled:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '';
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      opacity: 0.7;
+    }
+
+    .#{$prefix}-hint {
+      display: none;
+    }
+
+    &.disabled .#{$prefix}-hint {
+      display: flex;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+
+      align-items: center;
+      justify-content: center;
+
+      font-size: 0.9rem;
+
+      // On small screens the notice would be taller than the video, so let it
+      // flow below the poster instead of covering it.
+      @media screen and (max-width: 767px) {
+        display: block;
+        position: relative;
+        width: auto;
+        height: auto;
+      }
+
+      .#{$prefix}-hint-icon {
+        width: 34px;
+        height: auto;
+        margin-bottom: 15px;
+      }
+
+      .#{$prefix}-hint-text {
+        max-width: 400px;
+        background: #ffffff;
+        border: 2px solid #f2f2f2;
+        padding: 20px;
+
+        @media screen and (max-width: 767px) {
+          max-width: 100%;
+        }
+
+        p {
+          margin-top: 0;
+        }
+      }
+
+      .#{$prefix}-hint-link-container {
+        margin: 5px 0;
+      }
+
+      .#{$prefix}-id {
+        font-size: 0.75rem;
+        text-align: right;
+        margin-top: 5px;
+      }
     }
   }
 }
+
+@include videoEmbed('video');
+@include videoEmbed('youtube');

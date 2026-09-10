@@ -1,24 +1,22 @@
-<div class="youtube-container disabled <?= $class; ?>">
-	<?php if (isset($id)) : ?>
-		<?= $image; ?>
-        <div class="embed-container" style="display: none; padding-bottom: <?= str_replace(',', '.', $image->height() / $image->width() * 100); ?>%">
-            <iframe data-src="<?= $src; ?>"
-                    frameborder="0"
-                    allow="autoplay; encrypted-media"
-                    allowfullscreen></iframe>
-        </div>
-        <div class="youtube-hint">
-            <div class="youtube-hint-text">
-                <div>
-                    <h3><?= t('schnti.video.headline'); ?></h3>
-                    <p><?= t('schnti.video.text'); ?></p>
-                    <button class="youtube-hint-button"><?= t('schnti.video.buttonText'); ?></button>
-                    <div class="youtube-hint-link-container">
-                        <small><a href="https://www.youtube.com/watch?v=<?= $id; ?>" class="youtube-hint-link" target="_blank"><?= t('schnti.video.linkText'); ?></a></small>
-                    </div>
-                    <div class="youtube-id"><?= t('schnti.video.id'); ?> <?= $id; ?></div>
-                </div>
-            </div>
-        </div>
-	<?php endif; ?>
-</div>
+<?php
+
+/**
+ * YouTube embed. Delegates to the shared video snippet.
+ *
+ * This file only exists for backwards compatibility: `snippet('youtube', …)`
+ * is the documented entry point of 1.x, and projects may call or override it.
+ * The `??` defaults therefore accept the old 1.x parameter set as well.
+ *
+ * `youtube-container` is passed on as an additional class so stylesheets
+ * written against earlier versions keep matching.
+ */
+
+snippet('video', [
+    'service'     => $service ?? 'YouTube',
+    'src'         => $src,
+    'link'        => $link ?? ('https://www.youtube.com/watch?v=' . $id),
+    'id'          => $id,
+    'image'       => $image ?? null,
+    'class'       => $class ?? '',
+    'legacyClass' => 'youtube-container',
+]);

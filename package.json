@@ -3,13 +3,12 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "gulp"
+    "build": "sass --no-source-map --style=expanded src/youtube.scss dist/youtube.css && sass --no-source-map --style=compressed src/youtube.scss dist/youtube.min.css",
+    "watch": "sass --watch --no-source-map --style=expanded src/youtube.scss dist/youtube.css",
+    "start": "npm run build"
   },
   "devDependencies": {
-    "gulp": "^4.0.2",
-    "gulp-rename": "^2.0.0",
-    "gulp-sass": "^4.0.2",
-    "node-sass": "^4.13.1"
+    "sass": "^1.77.8"
   },
   "dependencies": {}
 }
